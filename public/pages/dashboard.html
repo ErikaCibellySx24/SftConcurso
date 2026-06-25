@@ -2,13 +2,20 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Police Tracker Pro | Dashboard</title>
+
 <link rel="stylesheet" href="../css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
+<!-- SIDEBAR -->
 <div class="sidebar">
   <h2>🚔 Police Tracker</h2>
+
   <a href="/pages/dashboard.html">🏠 Dashboard</a>
   <a href="/pages/cronograma.html">📅 Cronograma</a>
   <a href="/pages/materias.html">📚 Matérias</a>
@@ -16,56 +23,142 @@
   <a href="/pages/revisoes.html">🧠 Revisões</a>
   <a href="/pages/estatisticas.html">📊 Estatísticas</a>
   <a href="/pages/calendario.html">🗓 Calendário</a>
-  <button id="toggleTheme" class="theme-btn">
-  🌙 Modo Noturno
-</button>
+
+  <button id="toggleTheme" class="theme-btn">🌙 Modo Noturno</button>
 </div>
 
+<!-- MAIN -->
 <div class="main">
 
+  <!-- HEADER -->
   <div class="card">
-    <h1>Bem-vindo ao Police Tracker Pro</h1>
-    <p>Seu painel de estudos inteligente.</p>
+    <h1>👮 Painel de Estudos</h1>
+    <p>Organize, evolua e domine seu concurso.</p>
   </div>
 
-  <div class="grid" id="cards"></div>
+  <!-- ESTATÍSTICAS -->
+  <div class="grid">
 
+    <div class="small-card">
+      <h3>⏱ Horas</h3>
+      <p id="horas">0h</p>
+    </div>
+
+    <div class="small-card">
+      <h3>❓ Questões</h3>
+      <p id="questoes">0</p>
+    </div>
+
+    <div class="small-card">
+      <h3>🎯 Acertos</h3>
+      <p id="acertos">0%</p>
+    </div>
+
+    <div class="small-card">
+      <h3>🧠 Revisões</h3>
+      <p id="revisoes">0</p>
+    </div>
+
+  </div>
+
+  <!-- GAMIFICAÇÃO -->
   <div class="card">
-    <h2>📈 Progresso semanal</h2>
+    <h2>🏆 Gamificação</h2>
+    <p>Nível: <span id="nivel">1</span></p>
+    <p>XP: <span id="xp">0</span></p>
+  </div>
+
+  <!-- RESUMO + INTENSIVO -->
+  <div class="grid">
+
+    <div class="card">
+      <h2>📚 Resumo por Matéria</h2>
+      <div id="materiasResumo"></div>
+    </div>
+
+    <div class="card">
+      <h2>🔥 Intensivo do Dia</h2>
+      <div id="intensivoDia"></div>
+    </div>
+
+  </div>
+
+  <!-- GRÁFICO (MENOR E MAIS LIMPO) -->
+  <div class="card" style="height:260px;">
+    <h2>📈 Evolução semanal</h2>
     <canvas id="grafico"></canvas>
   </div>
 
+  <!-- FUTURO -->
+  <div class="grid">
+
+    <div class="card">
+      <h2>📅 Próximo foco</h2>
+      <p id="proximoFoco">Direito Constitucional</p>
+    </div>
+
+    <div class="card">
+      <h2>🔥 Meta do dia</h2>
+      <p id="meta">2h de estudo + 30 questões</p>
+    </div>
+
+  </div>
+
 </div>
-<div class="card">
-  <h2>📥 Importar Estudos em Massa</h2>
 
-  <textarea id="importText" rows="6" style="width:100%;padding:10px;border-radius:10px;border:1px solid #ccc;"
-    placeholder="Materia,hora,data&#10;Penal,2,2026-06-25"></textarea>
-
-  <button onclick="importarEstudos()" class="theme-btn" style="margin-top:10px;">
-    Importar
-  </button>
-
-  <p id="statusImport"></p>
-</div>
-
+<!-- SCRIPTS -->
+<script src="../js/storage.js"></script>
 <script src="../js/dashboard.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/theme.js"></script>
+
 <script>
 const ctx = document.getElementById('grafico');
+
 new Chart(ctx, {
-  type: 'bar',
+  type: 'line',
   data: {
-    labels: ['Seg','Ter','Qua','Qui','Sex','Sáb'],
+    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
     datasets: [{
-      label: 'Horas',
-      data: [2,3,1,4,2,5],
-      backgroundColor:'#8B7CF6'
+      label: 'Horas de estudo',
+      data: [2, 3, 1, 4, 2, 5],
+      borderColor: '#2563EB',
+      backgroundColor: 'rgba(37,99,235,0.15)',
+      fill: true,
+      tension: 0.4,
+      pointRadius: 3,
+      borderWidth: 2
     }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    plugins: {
+      legend: {
+        labels: {
+          color: getComputedStyle(document.body).getPropertyValue('--text'),
+          font: { size: 11 }
+        }
+      }
+    },
+
+    scales: {
+      x: {
+        ticks: {
+          color: getComputedStyle(document.body).getPropertyValue('--text'),
+          font: { size: 10 }
+        }
+      },
+      y: {
+        ticks: {
+          color: getComputedStyle(document.body).getPropertyValue('--text'),
+          font: { size: 10 }
+        }
+      }
+    }
   }
 });
 </script>
-<script src="../js/dashboard.js"></script>
-<script src="/js/theme.js"></script>
+
 </body>
 </html>

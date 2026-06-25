@@ -1,108 +1,60 @@
-async function carregarGrafico() {
+function renderDashboard() {
+  const state = AppState.get();
 
-  const res = await fetch("/api/estudos");
-  const dados = await res.json();
+  document.getElementById("horas").innerText = state.estudo.horas + "h";
+  document.getElementById("questoes").innerText = state.estudo.questoes;
 
-  // organiza por data
-  const dias = {};
-  
-  dados.forEach(item => {
-    const dia = item.data_estudo || "sem data";
-    
-    if(!dias[dia]) dias[dia] = 0;
-    dias[dia] += item.horas;
-  });
+  const acertos = state.estudo.questoes
+    ? Math.round((state.estudo.acertos / state.estudo.questoes) * 100)
+    : 0;
 
-  const labels = Object.keys(dias);
-  const valores = Object.values(dias);
+  document.getElementById("acertos").innerText = acertos + "%";
 
-  const ctx = document.getElementById('grafico');
+  document.getElementById("xp").innerText = state.xp;
+  document.getElementById("nivel").innerText = state.nivel;
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Horas estudadas',
-        data: valores,
-        backgroundColor:'#2563EB'
-      }]
-    }
-  });
+  renderMaterias();
+  gerarIntensivo();
 }
 
+function renderMaterias() {
+  const state = AppState.get();
+  const container = document.getElementById("materiasResumo");
 
-carregarGrafico();
-async function importarEstudos() {
+  container.innerHTML = Object.entries(state.materias)
+    .map(([nome, m]) => {
+      const acc = m.questoes
+        ? Math.round((m.acertos / m.questoes) * 100)
+        : 0;
 
-  const texto = document.getElementById("importText").value;
-  const status = document.getElementById("statusImport");
-
-  if (!texto) {
-    status.innerText = "❌ Nenhum dado informado";
-    return;
-  }
-
-  const linhas = texto.split("\n");
-
-  const estudos = linhas.map(linha => {
-    const [materia, horas, data] = linha.split(",");
-
-    return {
-      materia: materia.trim(),
-      horas: parseFloat(horas),
-      data_estudo: data.trim()
-    };
-  });
-
-  const res = await fetch("/api/estudos/import", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(estudos)
-  });
-
-  if (res.ok) {
-    status.innerText = "✅ Estudos importados com sucesso!";
-  } else {
-    status.innerText = "❌ Erro ao importar";
-  }
-}
-async function carregarCronograma() {
-
-  const res = await fetch("/api/cronograma");
-  const data = await res.json();
-
-  const container = document.getElementById("cronogramaCard");
-
-  if (!data.length) {
-    container.innerHTML = "<p>Nenhum cronograma importado ainda.</p>";
-    return;
-  }
-
-  // agrupar por dia
-  const agrupado = {};
-
-  data.forEach(item => {
-    if (!agrupado[item.dia]) {
-      agrupado[item.dia] = [];
-    }
-    agrupado[item.dia].push(item.materia);
-  });
-
-  let html = "";
-
-  for (let dia in agrupado) {
-    html += `
-      <div class="cronograma-dia">
-        <strong>${dia}</strong>
-        ${agrupado[dia].map(m => `<span class="tag">${m}</span>`).join("")}
-      </div>
-    `;
-  }
-
-  container.innerHTML = html;
+      return `
+        <div class="small-card">
+          <strong>${nome}</strong>
+          <p>⏱ ${m.horas}h</p>
+          <p>❓ ${m.questoes} questões</p>
+          <p>🎯 ${acc}% acertos</p>
+        </div>
+      `;
+    })
+    .join("");
 }
 
-carregarCronograma();
+function gerarIntensivo() {
+  const state = AppState.get();
+
+  const ranking = Object.entries(state.materias).sort((a, b) => {
+    const accA = a[1].questoes ? a[1].acertos / a[1].questoes : 0;
+    const accB = b[1].questoes ? b[1].acertos / b[1].questoes : 0;
+    return accA - accB;
+  });
+
+  const foco = ranking.slice(0, 2);
+
+  const container = document.getElementById("intensivoDia");
+
+  container.innerHTML = foco.length
+    ? foco.map(f => `<p>🔥 ${f[0]}</p>`).join("")
+    : "<p>Registre estudos para gerar intensivo</p>";
+}
+
+renderDashboard();
