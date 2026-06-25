@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const container = document.getElementById("cronogramaContainer");
+  const status = document.getElementById("status");
 
   /* 🔥 IMPORTAR EXCEL */
   window.importarExcel = async function () {
 
     const file = document.getElementById("fileInput").files[0];
-    const status = document.getElementById("status");
 
     if (!file) {
       alert("Selecione um arquivo Excel");
@@ -16,60 +16,79 @@ document.addEventListener("DOMContentLoaded", () => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("/api/cronograma/upload", {
-      method: "POST",
-      body: formData
-    });
+    try {
+      const res = await fetch("/api/cronograma/upload", {
+        method: "POST",
+        body: formData
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    status.innerText = data.message;
+      status.innerText = data.message || "Importado com sucesso";
 
-    // 🔥 atualiza dashboard automaticamente
-    window.dispatchEvent(new Event("cronogramaAtualizado"));
+      // 🔥 atualiza cronograma
+      carregarCronograma();
 
-    carregarCronograma();
+    } catch (err) {
+      console.error(err);
+      status.innerText = "Erro ao importar arquivo";
+    }
   };
 
   /* 🔥 CARREGAR DO BANCO */
   async function carregarCronograma() {
 
-    const res = await fetch("/api/cronograma");
-    const data = await res.json();
+    try {
+      const res = await fetch("/api/cronograma");
+      const data = await res.json();
 
-    if (!data.length) {
-      container.innerHTML = "<p>Nenhum cronograma encontrado</p>";
-      return;
-    }
-
-    const agrupado = {};
-
-    data.forEach(item => {
-      if (!agrupado[item.dia]) {
-        agrupado[item.dia] = [];
+      if (!data.length) {
+        container.innerHTML = "<p>Nenhum cronograma encontrado</p>";
+        return;
       }
-      agrupado[item.dia].push(item.materia);
-    });
 
-    let html = "<div class='card'><h2>📅 Meu Cronograma</h2>";
+      // ordem correta dos dias
+      const diasOrdem = [
+        "Segunda", "Terça", "Quarta",
+        "Quinta", "Sexta", "Sábado", "Domingo"
+      ];
 
-    for (let dia in agrupado) {
-      html += `
-        <div class="cronograma-dia">
-          <strong>${dia}</strong>
-          ${agrupado[dia].map(m => `<span class="tag">${m}</span>`).join("")}
-        </div>
-      `;
+      const agrupado = Object.fromEntries(
+        diasOrdem.map(d => [d, []])
+      );
+
+      data.forEach(item => {
+        if (agrupado[item.dia]) {
+          agrupado[item.dia].push(item.materia);
+        }
+      });
+
+      let html = "<div class='card'><h2>📅 Meu Cronograma</h2>";
+
+      diasOrdem.forEach(dia => {
+        if (agrupado[dia].length > 0) {
+          html += `
+            <div class="cronograma-dia">
+              <strong>${dia}</strong>
+              ${agrupado[dia]
+                .map(m => `<span class="tag">${m}</span>`)
+                .join("")}
+            </div>
+          `;
+        }
+      });
+
+      html += "</div>";
+
+      container.innerHTML = html;
+
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = "<p>Erro ao carregar cronograma</p>";
     }
-
-    html += "</div>";
-
-    container.innerHTML = html;
   }
 
+  /* 🔥 primeira carga */
   carregarCronograma();
-
-  /* 🔥 escuta atualização do dashboard */
-  window.addEventListener("cronogramaAtualizado", carregarCronograma);
 
 });
