@@ -201,6 +201,37 @@ body.dark{
 
   --shadow:0 10px 25px rgba(0,0,0,0.4);
 }
+.cronograma-dia{
+  margin-bottom:12px;
+  padding:10px;
+  border-left:4px solid var(--primary);
+  background:var(--background);
+  border-radius:8px;
+}
+
+.cronograma-dia{
+  margin-bottom:12px;
+  padding:10px;
+  border-left:4px solid var(--primary);
+  background:var(--card);
+  border-radius:10px;
+}
+
+.cronograma-dia strong{
+  display:block;
+  margin-bottom:6px;
+  color:var(--primary);
+}
+
+.tag{
+  display:inline-block;
+  background:var(--primary-light);
+  color:#fff;
+  padding:3px 8px;
+  border-radius:6px;
+  margin:2px;
+  font-size:12px;
+}
 
 /* ================= RESPONSIVO ================= */
 

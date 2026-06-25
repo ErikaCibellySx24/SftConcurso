@@ -21,24 +21,23 @@
 </button>
 </div>
 
-<div class="main">
+  <div class="main">
 
-  <div class="card">
-    <h2>📅 Meu Cronograma</h2>
-    <div id="cronogramaCard"></div>
+    <div class="card">
+    <h2>📤 Importar Cronograma (Excel)</h2>
+
+    <input type="file" id="fileInput" accept=".xlsx" />
+
+    <button class="theme-btn" onclick="importarExcel()">
+      Importar
+    </button>
+
+    <p id="status"></p>
   </div>
 
-  <div class="card">
-  <h2>📥 Importar Cronograma</h2>
+  <div class="main" id="cronogramaContainer"></div>
 
-  <input type="file" id="fileInput">
-
-  <button class="theme-btn" onclick="importarCronograma()">
-    Importar
-  </button>
-</div>
-
-<div class="main" id="cronogramaContainer"></div>
+<script src="/js/cronograma.js"></script>
 
 </div>
 

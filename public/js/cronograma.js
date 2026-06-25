@@ -2,54 +2,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const container = document.getElementById("cronogramaContainer");
 
-  window.importarCronograma = async function () {
+  /* 🔥 IMPORTAR EXCEL */
+  window.importarExcel = async function () {
 
     const file = document.getElementById("fileInput").files[0];
+    const status = document.getElementById("status");
 
     if (!file) {
-      alert("Selecione um arquivo");
+      alert("Selecione um arquivo Excel");
       return;
     }
 
-    const text = await file.text(); // funciona para CSV
+    const formData = new FormData();
+    formData.append("file", file);
 
-    const linhas = text.trim().split("\n");
-
-    const plano = [];
-
-    linhas.forEach((linha, index) => {
-
-      const [dia, materias] = linha.split(",");
-
-      if (index === 0 && dia.toLowerCase().includes("dia")) return;
-
-      plano.push({
-        dia: dia.trim(),
-        materias: materias.split(",").map(m => m.trim())
-      });
-
+    const res = await fetch("/api/cronograma/upload", {
+      method: "POST",
+      body: formData
     });
 
-    renderizar(plano);
+    const data = await res.json();
+
+    status.innerText = data.message;
+
+    // 🔥 atualiza dashboard automaticamente
+    window.dispatchEvent(new Event("cronogramaAtualizado"));
+
+    carregarCronograma();
   };
 
-  function renderizar(plano){
+  /* 🔥 CARREGAR DO BANCO */
+  async function carregarCronograma() {
 
-    container.innerHTML = "";
+    const res = await fetch("/api/cronograma");
+    const data = await res.json();
 
-    const box = document.createElement("div");
-    box.className = "card";
+    if (!data.length) {
+      container.innerHTML = "<p>Nenhum cronograma encontrado</p>";
+      return;
+    }
 
-    let html = "<h2>📅 Cronograma Importado</h2><ul>";
+    const agrupado = {};
 
-    plano.forEach(p => {
-      html += `<li><strong>${p.dia}:</strong> ${p.materias.join(" + ")}</li>`;
+    data.forEach(item => {
+      if (!agrupado[item.dia]) {
+        agrupado[item.dia] = [];
+      }
+      agrupado[item.dia].push(item.materia);
     });
 
-    html += "</ul>";
+    let html = "<div class='card'><h2>📅 Meu Cronograma</h2>";
 
-    box.innerHTML = html;
-    container.appendChild(box);
+    for (let dia in agrupado) {
+      html += `
+        <div class="cronograma-dia">
+          <strong>${dia}</strong>
+          ${agrupado[dia].map(m => `<span class="tag">${m}</span>`).join("")}
+        </div>
+      `;
+    }
+
+    html += "</div>";
+
+    container.innerHTML = html;
   }
+
+  carregarCronograma();
+
+  /* 🔥 escuta atualização do dashboard */
+  window.addEventListener("cronogramaAtualizado", carregarCronograma);
 
 });

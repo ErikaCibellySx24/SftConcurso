@@ -69,3 +69,40 @@ async function importarEstudos() {
     status.innerText = "❌ Erro ao importar";
   }
 }
+async function carregarCronograma() {
+
+  const res = await fetch("/api/cronograma");
+  const data = await res.json();
+
+  const container = document.getElementById("cronogramaCard");
+
+  if (!data.length) {
+    container.innerHTML = "<p>Nenhum cronograma importado ainda.</p>";
+    return;
+  }
+
+  // agrupar por dia
+  const agrupado = {};
+
+  data.forEach(item => {
+    if (!agrupado[item.dia]) {
+      agrupado[item.dia] = [];
+    }
+    agrupado[item.dia].push(item.materia);
+  });
+
+  let html = "";
+
+  for (let dia in agrupado) {
+    html += `
+      <div class="cronograma-dia">
+        <strong>${dia}</strong>
+        ${agrupado[dia].map(m => `<span class="tag">${m}</span>`).join("")}
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+}
+
+carregarCronograma();
