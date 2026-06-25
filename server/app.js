@@ -11,14 +11,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔥 FRONTEND
+// 🔥 FRONTEND (arquivos estáticos)
 app.use(express.static(path.join(__dirname, "../public")));
+
+// 🔥 ROTA PRINCIPAL (corrige "Cannot GET /")
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/pages/dashboard.html"));
+});
 
 // 🔥 API
 app.use("/api/questoes", questoesRoutes);
 app.use("/api/estudos", estudosRoutes);
 app.use("/api/cronograma", cronogramaRoutes);
 
+// PORTA
 const PORT = 3000;
 
 app.listen(PORT, () => {
