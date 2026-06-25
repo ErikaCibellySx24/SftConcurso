@@ -24,14 +24,37 @@
 <div class="main">
 
   <div class="card">
-    <h1>Seu desempenho</h1>
+    <h1>📊 Seu desempenho geral</h1>
   </div>
 
+  <!-- RESUMO GERAL -->
+  <div class="card" id="resumoGeral"></div>
+
+  <!-- RESUMO POR MATÉRIA -->
   <div class="card">
+    <h2>📚 Resumo por matéria</h2>
+    <div id="resumoMaterias"></div>
+  </div>
+
+  <!-- FILTRO + GRÁFICO -->
+  <div class="card">
+    <h2>📈 Evolução</h2>
+
+    <select id="modo">
+      <option value="geral">Geral</option>
+      <option value="materia">Por matéria</option>
+    </select>
+
+    <select id="materiaSelect" style="display:none;"></select>
+
     <canvas id="graf1"></canvas>
   </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/estatisticas.js"></script>
+<script src="/js/theme.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

@@ -263,21 +263,41 @@ body.dark{
 
 .materia {
   margin-bottom: 20px;
-  background: #151515;
+  background: var(--card);
   padding: 15px;
   border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 
-.materia h2 {
-  margin-bottom: 10px;
+.topic {
+  display: block;
+  padding: 8px;
+  margin: 5px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text);
+  transition: .2s;
+}
+
+.topic:hover {
+  background: var(--primary-light);
+  color: #fff;
+}
+
+.topic.done {
+  background: var(--success);
+  color: #fff;
+  text-decoration: line-through;
 }
 
 .progress-bar {
   height: 10px;
-  background: #333;
+  background: var(--border);
   border-radius: 5px;
   overflow: hidden;
-  margin-bottom: 10px;
 }
 
 .progress {
@@ -300,6 +320,18 @@ body.dark{
   background: #00ff88;
   color: #000;
   text-decoration: line-through;
+}
+canvas {
+  max-height: 260px;
+  opacity: 0.95;
+}
+body.dark .topic {
+  background: #0B1220;
+  color: var(--text);
+}
+
+body.dark .progress-bar {
+  background: #334155;
 }
 
 /* ================= RESPONSIVO ================= */
