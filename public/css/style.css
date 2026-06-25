@@ -352,6 +352,27 @@ body.dark .progress-bar {
 .stats-card small{
   color:var(--text-light);
 }
+.hero-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.motivacao{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.motivacao h2{
+  margin-bottom:10px;
+}
+
+.motivacao p{
+  color:var(--text-light);
+  line-height:1.5;
+}
 
 /* ================= RESPONSIVO ================= */
 
