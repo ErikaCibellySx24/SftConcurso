@@ -1,15 +1,62 @@
-document.addEventListener("DOMContentLoaded", () => {
+const calendar = document.getElementById("calendar");
+const modal = document.getElementById("modal");
+const input = document.getElementById("taskInput");
 
-  const container = document.querySelector(".main");
+let selectedDay = null;
 
-  const card = document.createElement("div");
-  card.className="card";
+// cria calendário simples (30 dias)
+for(let i=1;i<=30;i++){
 
-  card.innerHTML = `
-    <h2>Calendário</h2>
-    <p>Futuramente integrado com FullCalendar.js</p>
-  `;
+  const day = document.createElement("div");
+  day.className = "day";
+  day.innerHTML = `<strong>Dia ${i}</strong><br><small id="d${i}"></small>`;
 
-  container.appendChild(card);
+  day.onclick = () => {
+    selectedDay = i;
+    openModal();
+  };
 
-});
+  calendar.appendChild(day);
+}
+
+// abrir modal
+function openModal(){
+  modal.style.display = "flex";
+}
+
+// fechar modal
+function closeModal(){
+  modal.style.display = "none";
+  input.value = "";
+}
+
+// salvar tarefa
+function saveTask(){
+
+  const text = input.value;
+
+  if(!text) return;
+
+  // salva no localStorage
+  localStorage.setItem("day_"+selectedDay, text);
+
+  document.getElementById("d"+selectedDay).innerText = text;
+
+  closeModal();
+}
+
+// carregar tarefas salvas
+for(let i=1;i<=30;i++){
+  const saved = localStorage.getItem("day_"+i);
+  if(saved){
+    const el = document.getElementById("d"+i);
+    if(el) el.innerText = saved;
+  }
+}
+
+// fechar clicando fora
+window.onclick = (e) => {
+  if(e.target == modal){
+    closeModal();
+  }
+}

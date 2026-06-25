@@ -1,28 +1,38 @@
 :root{
-  --primary:#8B7CF6;
-  --primary-light:#B8ADF8;
-  --secondary:#A6C8FF;
-  --success:#9AE6B4;
-  --background:#F5F7FB;
-  --card:#FFFFFF;
-  --text:#374151;
-  --text-light:#6B7280;
-}
+  --primary:#2563EB;        /* azul forte moderno */
+  --primary-light:#60A5FA;  /* azul suave */
+  --secondary:#38BDF8;      /* azul céu vibrante */
+  --accent:#1D4ED8;         /* azul profundo */
 
+  --success:#22C55E;        /* verde moderno */
+  --warning:#F59E0B;        /* amarelo alerta */
+  --danger:#EF4444;         /* vermelho leve */
+
+  --background:#F1F5F9;      /* cinza azulado fundo */
+  --card:#FFFFFF;
+
+  --text:#0F172A;           /* quase preto azulado */
+  --text-light:#64748B;     /* cinza azulado suave */
+
+  --border:#E2E8F0;        /* bordas modernas */
+  --shadow:0 10px 25px rgba(15, 23, 42, 0.08);
+}
+/* RESET */
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, Arial, sans-serif;
 }
 
 body{
   background:var(--background);
   color:var(--text);
   display:flex;
+  min-height:100vh;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 .sidebar{
   width:260px;
   height:100vh;
@@ -30,43 +40,59 @@ body{
   padding:20px;
   border-right:1px solid #eee;
   position:fixed;
+  left:0;
+  top:0;
+  overflow-y:auto;
+  transition:.3s;
 }
 
 .sidebar h2{
   color:var(--primary);
   margin-bottom:20px;
+  font-size:20px;
 }
 
 .sidebar a{
-  display:block;
+  display:flex;
+  align-items:center;
+  gap:10px;
   padding:12px;
   margin:6px 0;
-  border-radius:10px;
+  border-radius:12px;
   text-decoration:none;
   color:var(--text);
   transition:.2s;
+  font-weight:500;
 }
 
 .sidebar a:hover{
   background:var(--primary-light);
   color:#fff;
+  transform:translateX(3px);
 }
 
-/* CONTEUDO */
+/* ================= MAIN ================= */
 .main{
   margin-left:260px;
-  padding:20px;
+  padding:25px;
   width:100%;
 }
 
+/* CARDS */
 .card{
   background:#fff;
   padding:20px;
-  border-radius:15px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
   margin-bottom:20px;
+  transition:.2s;
 }
 
+.card:hover{
+  transform:translateY(-2px);
+}
+
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -75,6 +101,119 @@ body{
 
 .small-card{
   background:#fff;
+  padding:18px;
+  border-radius:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  transition:.2s;
+}
+
+.small-card:hover{
+  transform:scale(1.02);
+}
+#calendar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+}
+
+.day{
+  background:#fff;
   padding:15px;
   border-radius:12px;
+  min-height:80px;
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  transition:.2s;
+}
+
+.day:hover{
+  transform:scale(1.03);
+  background:var(--primary-light);
+  color:#fff;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  width:300px;
+}
+
+.modal-content input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+
+/* ================= RESPONSIVO ================= */
+
+/* TABLET */
+@media (max-width: 1024px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .main{
+    padding:20px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px){
+
+  body{
+    flex-direction:column;
+  }
+
+  /* SIDEBAR vira topo */
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    border-right:none;
+    border-bottom:1px solid #eee;
+  }
+
+  .sidebar a{
+    flex:1 1 45%;
+    justify-content:center;
+    font-size:14px;
+  }
+
+  .main{
+    margin-left:0;
+    padding:15px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* MOBILE PEQUENO */
+@media (max-width: 480px){
+
+  .sidebar a{
+    flex:1 1 100%;
+  }
+
+  .card{
+    padding:15px;
+  }
 }

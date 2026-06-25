@@ -9,17 +9,39 @@
 
 <div class="sidebar">
   <h2>🚔 Police Tracker</h2>
-  <a href="dashboard.html">🏠 Dashboard</a>
-  <a href="calendario.html">🗓 Calendário</a>
+  <a href="/pages/dashboard.html">🏠 Dashboard</a>
+  <a href="/pages/cronograma.html">📅 Cronograma</a>
+  <a href="/pages/materias.html">📚 Matérias</a>
+  <a href="/pages/questoes.html">❓ Questões</a>
+  <a href="/pages/revisoes.html">🧠 Revisões</a>
+  <a href="/pages/estatisticas.html">📊 Estatísticas</a>
+  <a href="/pages/calendario.html">🗓 Calendário</a>
+  <button id="toggleTheme" class="theme-btn">
+  🌙 Modo Noturno
+</button>
 </div>
 
 <div class="main">
 
   <div class="card">
-    <h1>Calendário de Estudos</h1>
-    <p>(Futuramente FullCalendar integrado)</p>
+    <h1>📅 Calendário de Estudos</h1>
+    <p>Clique em um dia para adicionar sua tarefa</p>
   </div>
 
+  <div class="card">
+    <div id="calendar"></div>
+  </div>
+
+</div>
+
+<!-- Modal simples -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h3>Adicionar estudo</h3>
+    <input type="text" id="taskInput" placeholder="Ex: Penal - 2h">
+    <button onclick="saveTask()">Salvar</button>
+    <button onclick="closeModal()">Fechar</button>
+  </div>
 </div>
 <script src="../js/calendario.js"></script>
 </body>
