@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>🚔 Police Tracker</h2>
+
+    <a href="/pages/dashboard.html">🏠 Dashboard</a>
+    <a href="/pages/cronograma.html">📅 Cronograma</a>
+    <a href="/pages/questoes.html">❓ Questões</a>
+    <a href="/pages/materias.html">📚 Matérias</a>
+    <a href="/pages/calendario.html">🗓 Calendário</a>
+    <a href="/pages/estatisticas.html">📊 Estatísticas</a>
+    <a href="/pages/configuracoes.html">⚙️ Configurações</a>
+
+    <button id="toggleTheme" class="theme-btn">
+      🌙 Modo Noturno
+    </button>
+  </div>
+
+  <!-- CONTEÚDO -->
+  <div class="main">
+
+    <div class="card">
+      <h1>⚙️ Configurações</h1>
+      <p>Gerencie preferências do sistema</p>
+    </div>
+
+    <!-- PERFIL (futuro login) -->
+    <div class="card">
+      <h2>👤 Perfil</h2>
+      <p>Nome: Usuário Local</p>
+      <p>Status: Sem login (modo local)</p>
+    </div>
+
+    <!-- TEMA -->
+    <div class="card">
+      <h2>🎨 Aparência</h2>
+      <p>Escolha o tema do sistema</p>
+
+      <button onclick="setTheme('light')" class="theme-btn">
+        ☀️ Modo Claro
+      </button>
+
+      <button onclick="setTheme('dark')" class="theme-btn" style="margin-top:10px;">
+        🌙 Modo Escuro
+      </button>
+    </div>
+
+    <!-- DADOS -->
+    <div class="card">
+      <h2>💾 Dados locais</h2>
+      <p>Gerencie seus dados de estudo</p>
+
+      <button onclick="clearData()" style="background:#EF4444;color:#fff;padding:10px;border:none;border-radius:10px;cursor:pointer;">
+        🗑 Limpar dados
+      </button>
+    </div>
+
+  </div>
+
+  <script src="/js/theme.js"></script>
+
+  <script>
+
+    // definir tema manual
+    function setTheme(mode){
+      if(mode === 'dark'){
+        document.body.classList.add('dark');
+        localStorage.setItem('theme','dark');
+      } else {
+        document.body.classList.remove('dark');
+        localStorage.setItem('theme','light');
+      }
+    }
+
+    // limpar dados
+    function clearData(){
+      if(confirm("Deseja apagar todos os dados locais?")){
+        localStorage.clear();
+        alert("Dados apagados!");
+      }
+    }
+
+  </script>
+
+</body>
+</html>

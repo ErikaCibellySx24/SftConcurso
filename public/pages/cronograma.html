@@ -24,23 +24,26 @@
 <div class="main">
 
   <div class="card">
-    <h1>Cronograma Semanal</h1>
+    <h2>📅 Meu Cronograma</h2>
+    <div id="cronogramaCard"></div>
   </div>
 
   <div class="card">
-    <ul>
-      <li>Segunda: Português + RLM</li>
-      <li>Terça: Penal + Informática</li>
-      <li>Quarta: Processo Penal + DH</li>
-      <li>Quinta: Constitucional + Legislação</li>
-      <li>Sexta: Administrativo + Criminologia</li>
-      <li>Sábado: Revisão + Simulado</li>
-    </ul>
-  </div>
+  <h2>📥 Importar Cronograma</h2>
+
+  <input type="file" id="fileInput">
+
+  <button class="theme-btn" onclick="importarCronograma()">
+    Importar
+  </button>
+</div>
+
+<div class="main" id="cronogramaContainer"></div>
 
 </div>
 
 <script src="../js/cronograma.js"></script>
+<script src="/js/theme.js"></script>
 
 </body>
 </html>

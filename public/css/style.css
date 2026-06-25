@@ -1,22 +1,26 @@
 :root{
-  --primary:#2563EB;        /* azul forte moderno */
-  --primary-light:#60A5FA;  /* azul suave */
-  --secondary:#38BDF8;      /* azul céu vibrante */
-  --accent:#1D4ED8;         /* azul profundo */
+  /* 🎨 PALETA PRINCIPAL */
+  --primary:#2563EB;
+  --primary-light:#60A5FA;
+  --secondary:#38BDF8;
+  --accent:#1D4ED8;
 
-  --success:#22C55E;        /* verde moderno */
-  --warning:#F59E0B;        /* amarelo alerta */
-  --danger:#EF4444;         /* vermelho leve */
+  --success:#22C55E;
+  --warning:#F59E0B;
+  --danger:#EF4444;
 
-  --background:#F1F5F9;      /* cinza azulado fundo */
+  /* 🌞 LIGHT MODE */
+  --bg:#F1F5F9;
   --card:#FFFFFF;
 
-  --text:#0F172A;           /* quase preto azulado */
-  --text-light:#64748B;     /* cinza azulado suave */
+  --text:#0F172A;
+  --text-light:#64748B;
 
-  --border:#E2E8F0;        /* bordas modernas */
+  --border:#E2E8F0;
+
   --shadow:0 10px 25px rgba(15, 23, 42, 0.08);
 }
+
 /* RESET */
 *{
   margin:0;
@@ -26,24 +30,24 @@
 }
 
 body{
-  background:var(--background);
+  background:var(--bg);
   color:var(--text);
   display:flex;
   min-height:100vh;
+  transition:.3s;
 }
 
 /* ================= SIDEBAR ================= */
 .sidebar{
   width:260px;
   height:100vh;
-  background:#fff;
+  background:var(--card);
   padding:20px;
-  border-right:1px solid #eee;
+  border-right:1px solid var(--border);
   position:fixed;
   left:0;
   top:0;
   overflow-y:auto;
-  transition:.3s;
 }
 
 .sidebar h2{
@@ -66,9 +70,26 @@ body{
 }
 
 .sidebar a:hover{
-  background:var(--primary-light);
+  background:var(--primary);
   color:#fff;
   transform:translateX(3px);
+}
+
+/* BOTÃO TEMA */
+.theme-btn{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:var(--primary);
+  color:#fff;
+  transition:.2s;
+}
+
+.theme-btn:hover{
+  background:var(--accent);
 }
 
 /* ================= MAIN ================= */
@@ -78,18 +99,33 @@ body{
   width:100%;
 }
 
-/* CARDS */
+/* ================= CARDS ================= */
 .card{
-  background:#fff;
+  background:var(--card);
   padding:20px;
   border-radius:16px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  box-shadow:var(--shadow);
   margin-bottom:20px;
   transition:.2s;
+  border:1px solid var(--border);
 }
 
 .card:hover{
   transform:translateY(-2px);
+}
+
+/* SMALL CARDS */
+.small-card{
+  background:var(--card);
+  padding:18px;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  transition:.2s;
+}
+
+.small-card:hover{
+  transform:scale(1.02);
 }
 
 /* GRID */
@@ -99,17 +135,7 @@ body{
   gap:15px;
 }
 
-.small-card{
-  background:#fff;
-  padding:18px;
-  border-radius:14px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.04);
-  transition:.2s;
-}
-
-.small-card:hover{
-  transform:scale(1.02);
-}
+/* ================= CALENDÁRIO ================= */
 #calendar{
   display:grid;
   grid-template-columns:repeat(7,1fr);
@@ -117,13 +143,15 @@ body{
 }
 
 .day{
-  background:#fff;
+  background:var(--card);
   padding:15px;
   border-radius:12px;
   min-height:80px;
   cursor:pointer;
-  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
   transition:.2s;
+  color:var(--text);
 }
 
 .day:hover{
@@ -132,7 +160,7 @@ body{
   color:#fff;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 .modal{
   display:none;
   position:fixed;
@@ -146,16 +174,32 @@ body{
 }
 
 .modal-content{
-  background:#fff;
+  background:var(--card);
   padding:20px;
   border-radius:12px;
   width:300px;
+  border:1px solid var(--border);
 }
 
 .modal-content input{
   width:100%;
   padding:10px;
   margin:10px 0;
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+
+/* ================= DARK MODE ================= */
+body.dark{
+  --bg:#0F172A;
+  --card:#1E293B;
+
+  --text:#F8FAFC;
+  --text-light:#94A3B8;
+
+  --border:#334155;
+
+  --shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
 /* ================= RESPONSIVO ================= */
@@ -178,7 +222,6 @@ body{
     flex-direction:column;
   }
 
-  /* SIDEBAR vira topo */
   .sidebar{
     position:relative;
     width:100%;
@@ -186,8 +229,6 @@ body{
     display:flex;
     flex-wrap:wrap;
     gap:10px;
-    border-right:none;
-    border-bottom:1px solid #eee;
   }
 
   .sidebar a{
@@ -208,7 +249,6 @@ body{
 
 /* MOBILE PEQUENO */
 @media (max-width: 480px){
-
   .sidebar a{
     flex:1 1 100%;
   }

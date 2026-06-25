@@ -25,4 +25,25 @@ router.post("/", (req, res) => {
   );
 });
 
+router.post("/import", (req, res) => {
+  const estudos = req.body;
+
+  const stmt = db.prepare(
+    "INSERT INTO estudos (materia, horas, data_estudo) VALUES (?, ?, ?)"
+  );
+
+  try {
+    estudos.forEach(e => {
+      stmt.run(e.materia, e.horas, e.data_estudo);
+    });
+
+    stmt.finalize();
+
+    res.json({ message: "Importação concluída" });
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

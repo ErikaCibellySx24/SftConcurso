@@ -36,6 +36,18 @@
   </div>
 
 </div>
+<div class="card">
+  <h2>📥 Importar Estudos em Massa</h2>
+
+  <textarea id="importText" rows="6" style="width:100%;padding:10px;border-radius:10px;border:1px solid #ccc;"
+    placeholder="Materia,hora,data&#10;Penal,2,2026-06-25"></textarea>
+
+  <button onclick="importarEstudos()" class="theme-btn" style="margin-top:10px;">
+    Importar
+  </button>
+
+  <p id="statusImport"></p>
+</div>
 
 <script src="../js/dashboard.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -54,5 +66,6 @@ new Chart(ctx, {
 });
 </script>
 <script src="../js/dashboard.js"></script>
+<script src="/js/theme.js"></script>
 </body>
 </html>

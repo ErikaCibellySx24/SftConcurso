@@ -1,23 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const plano = [
-    {dia:"Segunda", materias:["Português","RLM"]},
-    {dia:"Terça", materias:["Penal","Informática"]},
-    {dia:"Quarta", materias:["Processo Penal","DH"]},
-    {dia:"Quinta", materias:["Constitucional","Legislação"]},
-    {dia:"Sexta", materias:["Administrativo","Criminologia"]},
-    {dia:"Sábado", materias:["Revisão","Simulado"]},
-  ];
+  const container = document.getElementById("cronogramaContainer");
 
-  const container = document.querySelector(".main");
+  window.importarCronograma = async function () {
 
-  if(container){
+    const file = document.getElementById("fileInput").files[0];
+
+    if (!file) {
+      alert("Selecione um arquivo");
+      return;
+    }
+
+    const text = await file.text(); // funciona para CSV
+
+    const linhas = text.trim().split("\n");
+
+    const plano = [];
+
+    linhas.forEach((linha, index) => {
+
+      const [dia, materias] = linha.split(",");
+
+      if (index === 0 && dia.toLowerCase().includes("dia")) return;
+
+      plano.push({
+        dia: dia.trim(),
+        materias: materias.split(",").map(m => m.trim())
+      });
+
+    });
+
+    renderizar(plano);
+  };
+
+  function renderizar(plano){
+
+    container.innerHTML = "";
+
     const box = document.createElement("div");
-    box.className="card";
+    box.className = "card";
 
-    let html = "<h2>Cronograma Dinâmico</h2><ul>";
+    let html = "<h2>📅 Cronograma Importado</h2><ul>";
 
-    plano.forEach(p=>{
+    plano.forEach(p => {
       html += `<li><strong>${p.dia}:</strong> ${p.materias.join(" + ")}</li>`;
     });
 
