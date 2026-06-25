@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Estatísticas</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>🚔 Police Tracker</h2>
+  <a href="dashboard.html">🏠 Dashboard</a>
+  <a href="estatisticas.html">📊 Estatísticas</a>
+</div>
+
+<div class="main">
+
+  <div class="card">
+    <h1>Seu desempenho</h1>
+  </div>
+
+  <div class="card">
+    <canvas id="graf1"></canvas>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById("graf1"), {
+  type:"line",
+  data:{
+    labels:["Jan","Fev","Mar","Abr"],
+    datasets:[{
+      label:"Evolução",
+      data:[40,60,70,90],
+      borderColor:"#8B7CF6"
+    }]
+  }
+});
+</script>
+<script src="../js/estatisticas.js"></script>
+</body>
+</html>

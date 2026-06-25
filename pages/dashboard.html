@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>🚔 Police Tracker</h2>
+  <a href="dashboard.html">🏠 Dashboard</a>
+  <a href="cronograma.html">📅 Cronograma</a>
+  <a href="materias.html">📚 Matérias</a>
+  <a href="questoes.html">❓ Questões</a>
+  <a href="revisoes.html">🧠 Revisões</a>
+  <a href="estatisticas.html">📊 Estatísticas</a>
+  <a href="calendario.html">🗓 Calendário</a>
+</div>
+
+<div class="main">
+
+  <div class="card">
+    <h1>Bem-vindo ao Police Tracker Pro</h1>
+    <p>Seu painel de estudos inteligente.</p>
+  </div>
+
+  <div class="grid" id="cards"></div>
+
+  <div class="card">
+    <h2>📈 Progresso semanal</h2>
+    <canvas id="grafico"></canvas>
+  </div>
+
+</div>
+
+<script src="../js/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('grafico');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Seg','Ter','Qua','Qui','Sex','Sáb'],
+    datasets: [{
+      label: 'Horas',
+      data: [2,3,1,4,2,5],
+      backgroundColor:'#8B7CF6'
+    }]
+  }
+});
+</script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>
