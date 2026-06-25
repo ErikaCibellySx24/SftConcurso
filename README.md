@@ -81,34 +81,6 @@ O sistema utiliza SQLite local.
 ## 📂 Estrutura do projeto
 
 
-PoliceTrackerPro/
-│
-├── public/ # Frontend (HTML, CSS, JS)
-│ ├── pages/
-│ ├── css/
-│ └── js/
-│
-├── server/ # Backend principal
-│ ├── app.js
-│ └── db.js
-│
-├── routes/ # Rotas da API
-│ ├── estudos.js
-│ ├── questoes.js
-│ └── cronograma.js
-│
-├── models/ # Camada de dados
-│ ├── Estudo.js
-│ ├── Questao.js
-│ └── Cronograma.js
-│
-├── database/
-│ └── tracker.db
-│
-├── package.json
-└── README.md
-
-
 ---
 
 ## 🚀 Como executar o projeto
@@ -158,20 +130,3 @@ POST /api/cronograma
 📌 Autor
 
 Projeto pessoal de estudos e evolução em desenvolvimento web.
-
-
----
-
-# 🚀 Se quiser o próximo upgrade
-
-Posso te entregar agora:
-
-### 💥 versão profissional nível SaaS:
-- login JWT
-- dashboard real por usuário
-- gráficos puxando banco de verdade
-- cronograma editável
-- pomodoro salvando sessões
-
-Só manda:
-👉 **“quero versão SaaS”**
