@@ -1,0 +1,25 @@
+const sqlite3 = require("sqlite3").verbose();
+const db = new sqlite3.Database("./database/tracker.db");
+
+db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS estudos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      materia TEXT,
+      horas REAL,
+      data TEXT DEFAULT CURRENT_DATE
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS questoes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      materia TEXT,
+      resolvidas INTEGER,
+      acertos INTEGER,
+      data TEXT DEFAULT CURRENT_DATE
+    )
+  `);
+});
+
+module.exports = db;
