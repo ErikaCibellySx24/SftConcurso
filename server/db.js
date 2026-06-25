@@ -1,8 +1,41 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
+// 🔥 BANCO ÚNICO E FIXO
 const db = new sqlite3.Database(
-  path.join(__dirname, "../database/tracker.db")
+  path.resolve(__dirname, "../database/tracker.db")
 );
+
+db.serialize(() => {
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS cronograma (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      dia TEXT NOT NULL,
+      materia TEXT NOT NULL,
+      concluido INTEGER DEFAULT 0
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS estudos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      materia TEXT,
+      horas REAL,
+      data TEXT DEFAULT CURRENT_DATE
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS questoes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      materia TEXT,
+      resolvidas INTEGER,
+      acertos INTEGER,
+      data TEXT DEFAULT CURRENT_DATE
+    )
+  `);
+
+});
 
 module.exports = db;

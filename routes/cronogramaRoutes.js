@@ -3,9 +3,9 @@ const router = express.Router();
 const multer = require("multer");
 const xlsx = require("xlsx");
 const path = require("path");
-const db = require("../db");
+const db = require("../server/db");
 
-// 📦 configuração upload
+// 📦 upload config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "server/uploads/");
@@ -27,9 +27,11 @@ router.post("/upload", upload.single("file"), (req, res) => {
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
 
-    const data = xlsx.utils.sheet_to_json(sheet);
+    // 🔥 CORREÇÃO PRINCIPAL AQUI
+    const raw = xlsx.utils.sheet_to_json(sheet, {
+      defval: ""
+    });
 
-    // limpa antes (evita duplicação)
     db.run("DELETE FROM cronograma", () => {
 
       const stmt = db.prepare(`
@@ -37,15 +39,25 @@ router.post("/upload", upload.single("file"), (req, res) => {
         VALUES (?, ?, 0)
       `);
 
-      data.forEach(item => {
-        stmt.run(item.dia, item.materia);
+      let count = 0;
+
+      raw.forEach(item => {
+
+        const dia = (item.dia || "").toString().trim();
+        const materia = (item.materia || "").toString().trim();
+
+        // 🔥 evita erro SQLITE NOT NULL
+        if (!dia || !materia) return;
+
+        stmt.run(dia, materia);
+        count++;
       });
 
       stmt.finalize();
 
       res.json({
         message: "Cronograma importado com sucesso!",
-        total: data.length
+        total: count
       });
 
     });
