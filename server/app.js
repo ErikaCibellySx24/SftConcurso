@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const questoesRoutes = require("../routes/questoes");
 const estudosRoutes = require("../routes/estudos");
-const cronogramaRoutes = require("../routes/cronograma");
+const cronogramaRoutes = require("../routes/cronogramaRoutes");
 
 const app = express();
 
@@ -14,7 +14,10 @@ app.use(express.json());
 // 🔥 FRONTEND (arquivos estáticos)
 app.use(express.static(path.join(__dirname, "../public")));
 
-// 🔥 ROTA PRINCIPAL (corrige "Cannot GET /")
+// 🔥 UPLOADS (IMPORTANTE para multer salvar arquivos)
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// 🔥 ROTA PRINCIPAL
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/pages/dashboard.html"));
 });
