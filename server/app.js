@@ -19,7 +19,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // 🔥 ROTA PRINCIPAL
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/pages/dashboard.html"));
+  res.sendFile(path.join(__dirname, "../public/pages/login.html"));
 });
 
 // 🔥 API
