@@ -49,22 +49,34 @@ function getAllTopics(materiaObj) {
 function carregarMateriasUsuario() {
 
 
-    const concurso =
-        localStorage.getItem("concurso");
+    const usuario =
+    JSON.parse(
+        localStorage.getItem("usuario")
+    );
 
 
-    if (concurso === "pcpe") {
+    if(!usuario){
+
+        return null;
+
+    }
+
+
+
+    if(usuario.areaConcurso === "civil"){
 
         return materiasPC;
 
     }
 
 
-    if (concurso === "pmpe") {
+
+    if(usuario.areaConcurso === "militar"){
 
         return materiasPM;
 
     }
+
 
 
     return null;

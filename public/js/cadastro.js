@@ -77,7 +77,7 @@ document
         if(data.sucesso){
 
 
-            alert("Cadastro realizado com sucesso!");
+            alert("Seu cadastro foi realizado com sucesso!");
 
 
             window.location.href="login.html";

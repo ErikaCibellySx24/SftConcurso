@@ -842,3 +842,4 @@ const materiasPC = {
     ]
   }
 };
+export default materiasPC;
