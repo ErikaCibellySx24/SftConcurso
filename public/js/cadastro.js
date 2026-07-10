@@ -9,10 +9,6 @@ document
     document.getElementById("nome").value;
 
 
-    const celular =
-    document.getElementById("celular").value;
-
-
     const email =
     document.getElementById("email").value;
 
@@ -21,188 +17,94 @@ document
     document.getElementById("senha").value;
 
 
-    const confirmar =
+    const confirmarSenha =
     document.getElementById("confirmarSenha").value;
 
 
-    const area =
+    const areaConcurso =
     document.getElementById("areaConcurso").value;
 
 
 
-    // ==========================
-    // VALIDAÇÕES
-    // ==========================
-
-    if(senha !== confirmar){
+    if(senha !== confirmarSenha){
 
         alert("As senhas não coincidem.");
-
         return;
 
     }
 
-
-    if(senha.length < 8){
-
-        alert("A senha deve ter no mínimo 8 caracteres.");
-
-        return;
-
-    }
-
-
-    if(area === ""){
-
-        alert("Selecione uma área de concurso.");
-
-        return;
-
-    }
-
-
-
-    // ==========================
-    // USUÁRIO TEMPORÁRIO
-    // FUTURAMENTE VAI PARA SQLITE
-    // ==========================
 
 
     const usuario = {
 
-        nome: nome,
-
-        celular: celular,
-
-        email: email,
-
-        areaConcurso: area
+        nome,
+        email,
+        senha,
+        areaConcurso
 
     };
 
 
 
-    localStorage.setItem(
-        "usuario",
-        JSON.stringify(usuario)
-    );
+    fetch("/api/auth/cadastro",{
+
+
+        method:"POST",
+
+
+        headers:{
+
+            "Content-Type":"application/json"
+
+        },
+
+
+        body:JSON.stringify(usuario)
+
+
+    })
+
+    .then(res=>res.json())
+
+
+    .then(data=>{
+
+
+        console.log(data);
 
 
 
-    alert("Cadastro realizado com sucesso!");
+        if(data.sucesso){
 
 
+            alert("Cadastro realizado com sucesso!");
 
-    window.location.href =
-    "login.html";
+
+            window.location.href="login.html";
+
+
+        }else{
+
+
+            alert(data.mensagem);
+
+
+        }
+
+
+    })
+
+
+    .catch(error=>{
+
+
+        console.error(error);
+
+
+        alert("Erro ao conectar com servidor.");
+
+
+    });
 
 
 });
-
-
-
-
-// ==========================
-// VALIDAÇÃO VISUAL DAS SENHAS
-// ==========================
-
-
-const senha =
-document.getElementById("senha");
-
-
-const confirmarSenha =
-document.getElementById("confirmarSenha");
-
-
-
-function validarSenhas(){
-
-
-    if(confirmarSenha.value === ""){
-
-
-        senha.classList.remove(
-            "input-valid",
-            "input-invalid"
-        );
-
-
-        confirmarSenha.classList.remove(
-            "input-valid",
-            "input-invalid"
-        );
-
-
-        return;
-
-    }
-
-
-
-
-    if(senha.value === confirmarSenha.value){
-
-
-        senha.classList.add(
-            "input-valid"
-        );
-
-
-        confirmarSenha.classList.add(
-            "input-valid"
-        );
-
-
-        senha.classList.remove(
-            "input-invalid"
-        );
-
-
-        confirmarSenha.classList.remove(
-            "input-invalid"
-        );
-
-
-    }
-
-    else{
-
-
-        senha.classList.add(
-            "input-invalid"
-        );
-
-
-        confirmarSenha.classList.add(
-            "input-invalid"
-        );
-
-
-        senha.classList.remove(
-            "input-valid"
-        );
-
-
-        confirmarSenha.classList.remove(
-            "input-valid"
-        );
-
-
-    }
-
-
-}
-
-
-
-senha.addEventListener(
-    "input",
-    validarSenhas
-);
-
-
-confirmarSenha.addEventListener(
-    "input",
-    validarSenhas
-);

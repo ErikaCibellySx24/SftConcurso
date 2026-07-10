@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 // Sistema
-app.use("/api/questoes", questoesRoutes);
+app.use("./api/questoes/", questoesRoutes);
 app.use("/api/estudos", estudosRoutes);
 app.use("/api/cronograma", cronogramaRoutes);
 
