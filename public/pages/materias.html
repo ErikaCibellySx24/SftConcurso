@@ -1,41 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
 <meta charset="UTF-8">
+
 <title>Matérias</title>
+
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/materias.css">
+
 <link rel="manifest" href="/manifest.json">
+
 </head>
+
 
 <body>
 
+
 <div class="sidebar">
+
   <h2>🚔 Police Tracker</h2>
+
   <a href="/pages/dashboard.html">🏠 Dashboard</a>
+
   <a href="/pages/cronograma.html">📅 Cronograma</a>
+
   <a href="/pages/materias.html">📚 Matérias</a>
+
   <a href="/pages/questoes.html">❓ Questões</a>
+
   <a href="/pages/revisoes.html">🧠 Revisões</a>
+
   <a href="/pages/estatisticas.html">📊 Estatísticas</a>
+
   <a href="/pages/calendario.html">🗓 Calendário</a>
 
-  <button id="toggleTheme" class="theme-btn">🌙 Modo Noturno</button>
+
+  <button id="toggleTheme" class="theme-btn">
+    🌙 Modo Noturno
+  </button>
+
 </div>
+
+
+
 
 <div class="main">
 
+
   <div class="card">
-    <h1>📚 PC PE / PB - Agente</h1>
-    <p>Clique para marcar progresso</p>
+
+    <h1 id="tituloEdital">
+      📚 Edital Verticalizado
+    </h1>
+
+
+    <p>
+      Clique nos tópicos para marcar progresso.
+    </p>
+
+
   </div>
 
-  <div id="container"></div>
+
+
+
+  <div id="container">
+
+  </div>
+
+
+
 
 </div>
 
-<script src="../js/materias.js"></script>
+
+
+
+<script 
+type="module" 
+src="../js/materias.js">
+</script>
+
+
 <script src="../js/theme.js"></script>
 
+
+
 </body>
+
 </html>

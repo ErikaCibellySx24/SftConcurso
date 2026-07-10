@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../database/db"); // ajuste o caminho se necessário
+const db = require("../server/db"); // ajuste o caminho se necessário
 
 // CADASTRAR USUÁRIO
 router.post("/cadastro", (req, res) => {

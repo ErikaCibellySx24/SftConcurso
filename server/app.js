@@ -3,7 +3,7 @@ const path = require("path");
 const cors = require("cors");
 
 // Banco (garante que as tabelas sejam criadas)
-require("../database/db");
+require("./db");
 
 // Rotas
 const authRoutes = require("../routes/auth");
