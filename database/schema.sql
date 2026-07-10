@@ -7,6 +7,17 @@ const db = new sqlite3.Database(
 );
 
 db.serialize(() => {
+    // 👤 USUÁRIOS (CADASTRO E LOGIN)
+  db.run(`
+    CREATE TABLE IF NOT EXISTS usuarios (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      senha TEXT NOT NULL,
+      areaConcurso TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
 
   // 📅 CRONOGRAMA (AGORA NÃO VAI MAIS QUEBRAR)
   db.run(`

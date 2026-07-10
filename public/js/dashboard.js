@@ -1,4 +1,14 @@
 function renderDashboard() {
+<<<<<<< HEAD
+
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+  if (usuario) {
+    document.getElementById("tituloPainel").innerText =
+      `👮‍♀️ Painel de Estudos - ${usuario.nome}`;
+  }
+
+=======
 
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
@@ -17,6 +27,7 @@ function renderDashboard() {
     }
   }
 
+>>>>>>> 4296f0fcf9d51a66db314ab166a8a67d41c1943e
   const state = AppState.get();
 
   document.getElementById("horas").innerText = state.estudo.horas + "h";
